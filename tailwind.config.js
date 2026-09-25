@@ -10,10 +10,15 @@ module.exports = {
       center: true,
     },
     extend: {
-      fontFamily:{
-        'nunito':['Nunito Sans'],
-        'poppins':['Poppins'],
-        'inter':['Inter'],
+      colors: {
+        heading: '#1a1a1a',
+        body: '#4a4a4a',
+        link: '#2563eb',
+        'link-hover': '#1d4ed8',
+        accent: '#2563eb',
+      },
+      fontFamily: {
+        'inter': ['Inter'],
       },
     },
   },

@@ -1,49 +1,40 @@
-import React from 'react'
+// ——— Teaching data (edit here to add/update entries) ———
+const courses = [
+  {
+    term: 'Fall 2023',
+    course: 'Econ 452',
+    title: 'Intermediate Introduction to Statistics and Econometrics II',
+    role: 'Graduate Student Instructor',
+  },
+]
 
 const TeachingComponent = () => {
   return (
-    <div className="grid grid-flow-row grid-cols-5">
-        <div className='col-start-2 col-span-4 justify-center mb-5'>
-            <h1 className='text-base md:text-xl font-medium'>
-                Teaching
-            </h1>
-            <span className='text-slate-700 text-sm md:text-base'>Read my teaching statement</span>
-        </div>
+    <div>
+      <h1 className="text-2xl font-semibold text-heading mb-8">Teaching</h1>
 
-        <div className=" row-start-2 col-start-2 col-span-3 bg-[#FBFFFB] rounded-lg justify-center items-center">
-            <h1 className='text-base md:text-xl font-medium mb-1'>
-                Graduate Student Instructor
-            </h1>
-            <div className="rounded-lg border border-gray-200">
-                <div className="overflow-x-auto rounded-t-lg">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+      <h2 className="text-lg font-medium text-heading mb-4">Graduate Student Instructor</h2>
 
-                    <thead className="ltr:text-left rtl:text-right">
-                        <tr>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-900">Fall 2023</th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-700"></th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-700">
-                            Econ 452 - Intermediate introduction to statistics and econometrics II
-                        </th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-700"></th>
-                        </tr>
-                    </thead>
-
-                    <thead className="ltr:text-left rtl:text-right">
-                        <tr>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-900">Fall 2023</th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-700"></th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-700">
-                            Econ 452 - Intermediate introduction to statistics and econometrics II
-                        </th>
-                        <th className="whitespace-nowrap px-4 py-2 font-medium text-slate-700"></th>
-                        </tr>
-                    </thead>
-
-                    </table>
-                </div>
-                </div>
-        </div>
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200 text-sm">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-4 py-3 text-left font-medium text-heading">Term</th>
+              <th className="px-4 py-3 text-left font-medium text-heading">Course</th>
+              <th className="px-4 py-3 text-left font-medium text-heading">Title</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {courses.map((c, i) => (
+              <tr key={i}>
+                <td className="px-4 py-3 text-body whitespace-nowrap">{c.term}</td>
+                <td className="px-4 py-3 text-body whitespace-nowrap">{c.course}</td>
+                <td className="px-4 py-3 text-body">{c.title}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
