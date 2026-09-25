@@ -14,10 +14,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white text-body`}>
+      <body className={`${inter.className} bg-white text-neutral-700`}>
         <Container>
           <Header />
-          {children}
+          <main className="min-h-[60vh]">
+            {children}
+          </main>
           <Footer />
         </Container>
       </body>

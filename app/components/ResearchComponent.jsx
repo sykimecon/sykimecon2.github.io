@@ -9,7 +9,6 @@ const papers = {
     coauthors: '',
     abstract: '[Abstract text for your job market paper.]',
     pdf: '',
-    status: 'Job Market Paper',
   },
   workingPapers: [
     {
@@ -17,11 +16,10 @@ const papers = {
       coauthors: '',
       abstract: '[Abstract text]',
       pdf: 'https://www.dropbox.com/scl/fi/tsbagohxjghtvdapylcn5/Draft_Apr_2024.pdf?rlkey=h4hs2ttwlk73m1mfuryc6xqhq&e=1&st=u8pzx94j&dl=0',
-      status: 'Working Paper',
     },
   ],
   workInProgress: [
-    // { title: '', coauthors: '', status: 'Work in Progress' },
+    // { title: '', coauthors: '' },
   ],
 }
 
@@ -31,85 +29,80 @@ function AbstractToggle({ text }) {
   if (!text || text.startsWith('[')) return null
 
   return (
-    <div className="mt-2">
+    <>
       <button
         onClick={() => setOpen(!open)}
-        className="text-sm text-link hover:text-link-hover"
+        className="text-sm text-blue-600 hover:underline ml-1"
       >
         [{open ? '\u2212' : '+'}Abstract]
       </button>
       {open && (
-        <p className="mt-2 text-sm text-body leading-relaxed pl-4 border-l-2 border-gray-200">
+        <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
           {text}
         </p>
       )}
-    </div>
+    </>
   )
 }
 
-function PaperEntry({ paper, highlight = false }) {
+function PaperEntry({ paper }) {
   return (
-    <div className={`mb-6 ${highlight ? 'border-l-4 border-accent bg-blue-50 p-4 rounded-r-lg' : ''}`}>
-      {highlight && (
-        <p className="text-xs font-medium text-accent uppercase tracking-wide mb-1">
-          {paper.status}
-        </p>
-      )}
-      <h3 className={`font-medium text-heading ${highlight ? 'text-lg' : ''}`}>
-        {paper.title}
-      </h3>
-      {paper.coauthors && (
-        <p className="text-sm text-gray-500 mt-0.5">with {paper.coauthors}</p>
-      )}
-      <div className="flex items-center gap-3 mt-1">
-        {!highlight && paper.status && (
-          <span className="text-xs text-gray-500 italic">{paper.status}</span>
+    <li className="mb-4">
+      <p>
+        <span className="font-medium text-neutral-900">{paper.title}</span>
+        {paper.coauthors && (
+          <span className="text-neutral-500"> (with {paper.coauthors})</span>
         )}
         {paper.pdf && (
           <a
             href={paper.pdf}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-link hover:text-link-hover"
+            className="text-sm text-blue-600 hover:underline ml-1"
           >
             [PDF]
           </a>
         )}
-      </div>
-      <AbstractToggle text={paper.abstract} />
-    </div>
+        <AbstractToggle text={paper.abstract} />
+      </p>
+    </li>
   )
 }
 
 const ResearchComponent = () => {
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-heading mb-8">Research</h1>
+      <h1 className="text-2xl font-semibold text-neutral-900 mb-6">Research</h1>
 
       {/* Job Market Paper */}
-      <section className="mb-10">
-        <PaperEntry paper={papers.jmp} highlight={true} />
-      </section>
+      <h2 className="text-lg font-semibold text-neutral-900 mb-3">Job Market Paper</h2>
+      <ul className="list-none mb-6">
+        <PaperEntry paper={papers.jmp} />
+      </ul>
+
+      <hr className="border-neutral-200 my-6" />
 
       {/* Working Papers */}
-      <section className="mb-10">
-        <h2 className="text-lg font-medium text-heading mb-4">Working Papers</h2>
+      <h2 className="text-lg font-semibold text-neutral-900 mb-3">Working Papers</h2>
+      <ul className="list-none mb-6">
         {papers.workingPapers.map((paper, i) => (
           <PaperEntry key={i} paper={paper} />
         ))}
-      </section>
+      </ul>
+
+      <hr className="border-neutral-200 my-6" />
 
       {/* Work in Progress */}
-      <section className="mb-10">
-        <h2 className="text-lg font-medium text-heading mb-4">Work in Progress</h2>
-        {papers.workInProgress.length > 0 ? (
-          papers.workInProgress.map((paper, i) => (
+      <h2 className="text-lg font-semibold text-neutral-900 mb-3">Work in Progress</h2>
+      {papers.workInProgress.length > 0 ? (
+        <ul className="list-none">
+          {papers.workInProgress.map((paper, i) => (
             <PaperEntry key={i} paper={paper} />
-          ))
-        ) : (
-          <p className="text-sm text-gray-400 italic">Coming soon.</p>
-        )}
-      </section>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-neutral-400 italic text-sm">Coming soon.</p>
+      )}
     </div>
   )
 }

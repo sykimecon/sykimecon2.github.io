@@ -3,19 +3,19 @@ const CvComponent = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold text-heading">Curriculum Vitae</h1>
+      <h1 className="text-2xl font-semibold text-neutral-900 mb-4">Curriculum Vitae</h1>
+
+      <p className="mb-6">
         <a
           href={cvPath}
           download
-          className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-white text-sm font-medium rounded hover:bg-link-hover transition-colors"
+          className="text-blue-600 hover:underline"
         >
           Download PDF
         </a>
-      </div>
+      </p>
 
-      {/* Embedded PDF viewer */}
-      <div className="border border-gray-200 rounded-lg overflow-hidden">
+      <div className="border border-neutral-200 rounded overflow-hidden">
         <iframe
           src={cvPath}
           title="Curriculum Vitae"
@@ -24,10 +24,9 @@ const CvComponent = () => {
         />
       </div>
 
-      {/* Fallback */}
-      <p className="text-sm text-gray-400 mt-3 text-center">
+      <p className="text-xs text-neutral-400 mt-3">
         PDF not displaying?{' '}
-        <a href={cvPath} download className="text-link hover:text-link-hover">
+        <a href={cvPath} download className="text-blue-600 hover:underline">
           Download it here
         </a>.
       </p>
