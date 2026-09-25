@@ -14,7 +14,7 @@ const papers = {
     {
       title: 'Allocating Labor Across Small Firms: Experimental Evidence on Information Constraints',
       coauthors: '',
-      abstract: '[Abstract text]',
+      abstract: '',
       pdf: 'https://www.dropbox.com/scl/fi/tsbagohxjghtvdapylcn5/Draft_Apr_2024.pdf?rlkey=h4hs2ttwlk73m1mfuryc6xqhq&e=1&st=u8pzx94j&dl=0',
     },
   ],
@@ -32,12 +32,13 @@ function AbstractToggle({ text }) {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="text-sm text-blue-600 hover:underline ml-1"
+        className="abstract-toggle"
+        style={{ marginLeft: '0.25rem' }}
       >
-        [{open ? '\u2212' : '+'}Abstract]
+        <span className="abstract-toggle-icon">{open ? '[\u2212]' : '[+]'}</span> Abstract
       </button>
       {open && (
-        <p className="mt-2 text-sm text-neutral-600 leading-relaxed">
+        <p style={{ marginTop: '0.5rem', fontSize: '0.9rem', color: 'var(--color-text-muted)', lineHeight: '1.6' }}>
           {text}
         </p>
       )}
@@ -47,61 +48,46 @@ function AbstractToggle({ text }) {
 
 function PaperEntry({ paper }) {
   return (
-    <li className="mb-4">
-      <p>
-        <span className="font-medium text-neutral-900">{paper.title}</span>
-        {paper.coauthors && (
-          <span className="text-neutral-500"> (with {paper.coauthors})</span>
-        )}
+    <div className="paper-card">
+      <p className="paper-title">
+        {paper.title}
         {paper.pdf && (
           <a
             href={paper.pdf}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-blue-600 hover:underline ml-1"
+            style={{ marginLeft: '0.5rem', fontSize: '0.875rem', fontWeight: 400 }}
           >
             [PDF]
           </a>
         )}
-        <AbstractToggle text={paper.abstract} />
       </p>
-    </li>
+      {paper.coauthors && (
+        <p className="paper-meta">with {paper.coauthors}</p>
+      )}
+      <AbstractToggle text={paper.abstract} />
+    </div>
   )
 }
 
 const ResearchComponent = () => {
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-neutral-900 mb-6">Research</h1>
+      <h2 className="section-heading">Job Market Paper</h2>
+      <PaperEntry paper={papers.jmp} />
 
-      {/* Job Market Paper */}
-      <h2 className="text-lg font-semibold text-neutral-900 mb-3">Job Market Paper</h2>
-      <ul className="list-none mb-6">
-        <PaperEntry paper={papers.jmp} />
-      </ul>
+      <h2 className="section-heading" style={{ marginTop: '2rem' }}>Working Papers</h2>
+      {papers.workingPapers.map((paper, i) => (
+        <PaperEntry key={i} paper={paper} />
+      ))}
 
-      <hr className="border-neutral-200 my-6" />
-
-      {/* Working Papers */}
-      <h2 className="text-lg font-semibold text-neutral-900 mb-3">Working Papers</h2>
-      <ul className="list-none mb-6">
-        {papers.workingPapers.map((paper, i) => (
-          <PaperEntry key={i} paper={paper} />
-        ))}
-      </ul>
-
-      <hr className="border-neutral-200 my-6" />
-
-      {/* Work in Progress */}
-      <h2 className="text-lg font-semibold text-neutral-900 mb-3">Work in Progress</h2>
+      <h2 className="section-heading" style={{ marginTop: '2rem' }}>Work in Progress</h2>
       {papers.workInProgress.length > 0 ? (
-        <ul className="list-none">
-          {papers.workInProgress.map((paper, i) => (
-            <PaperEntry key={i} paper={paper} />
-          ))}
-        </ul>
+        papers.workInProgress.map((paper, i) => (
+          <PaperEntry key={i} paper={paper} />
+        ))
       ) : (
-        <p className="text-neutral-400 italic text-sm">Coming soon.</p>
+        <p style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>Coming soon.</p>
       )}
     </div>
   )

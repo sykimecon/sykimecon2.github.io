@@ -1,14 +1,15 @@
 'use client';
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'Research', href: '/research' },
-  { label: 'CV', href: '/cv' },
   { label: 'Teaching', href: '/teaching' },
+  { label: 'CV', href: '/cv' },
 ]
 
 const Header = () => {
@@ -16,67 +17,65 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="mb-8">
-      <nav className="flex items-center justify-between py-4">
-        <Link href="/" className="text-lg font-semibold text-neutral-900 hover:text-blue-600 transition-colors">
-          Seongyoon Kim
-        </Link>
+    <div className="navbar">
+      <nav className="main-nav" aria-label="Main navigation">
+        <div className="nav-left">
+          <Image
+            src="./images/sy.jpg"
+            alt=""
+            width={32}
+            height={32}
+            unoptimized={true}
+            className="nav-profile-pic"
+          />
+          <p className="brand">
+            <Link href="/">Seongyoon Kim</Link>
+          </p>
+        </div>
 
         {/* Desktop nav */}
-        <div className="hidden sm:flex items-center gap-6">
+        <ul className="nav-links">
           {navLinks.map(({ label, href }) => (
-            <Link
-              key={href}
-              href={href}
-              className={`text-sm transition-colors ${
-                pathname === href
-                  ? 'text-blue-600'
-                  : 'text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              {label}
-            </Link>
+            <li key={href} style={{ listStyle: 'none' }}>
+              <Link
+                href={href}
+                className={pathname === href ? 'active' : ''}
+              >
+                {label}
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Mobile hamburger */}
         <button
-          className="sm:hidden p-1 text-neutral-500 hover:text-neutral-700"
+          className={`hamburger ${mobileOpen ? 'active' : ''}`}
+          type="button"
+          aria-label="Toggle navigation menu"
+          aria-expanded={mobileOpen}
           onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {mobileOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </button>
-      </nav>
 
-      {/* Mobile dropdown */}
-      {mobileOpen && (
-        <div className="sm:hidden border-t border-neutral-100 py-3 flex flex-col gap-3">
+        {/* Mobile dropdown */}
+        <ul className={`mobile-nav ${mobileOpen ? 'active' : ''}`}>
           {navLinks.map(({ label, href }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setMobileOpen(false)}
-              className={`text-sm ${
-                pathname === href
-                  ? 'text-blue-600'
-                  : 'text-neutral-500 hover:text-neutral-900'
-              }`}
-            >
-              {label}
-            </Link>
+            <li key={href}>
+              <Link
+                href={href}
+                className={pathname === href ? 'active' : ''}
+                onClick={() => setMobileOpen(false)}
+              >
+                {label}
+              </Link>
+            </li>
           ))}
-        </div>
-      )}
-
-      <hr className="border-neutral-200" />
-    </header>
+        </ul>
+      </nav>
+    </div>
   )
 }
 
